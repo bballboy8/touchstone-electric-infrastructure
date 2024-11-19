@@ -34,7 +34,7 @@ with Diagram("Chatbot Infrastructure", filename="chatbot_infrastructure", show=F
         # FastAPI Workflow APIs
         openai_api_chat = Custom("OpenAI API Chat Completion", "images/openai.png")
         pinecone_db_fastapi = Custom("Pinecone DB", "images/pinecone.png")
-        salesforce = Custom("Salesforce", "images/salesforce.png")
+        salesforce = Custom("Service Titan", "images/service_titan.png")
 
         # Standalone Embedding Workflow APIs
         openai_api_embedding = Custom("OpenAI API Embedding", "images/openai.png")
