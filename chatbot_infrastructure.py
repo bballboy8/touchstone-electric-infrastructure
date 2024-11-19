@@ -3,6 +3,7 @@ from diagrams.gcp.compute import ComputeEngine
 from diagrams.custom import Custom
 from diagrams.onprem.client import Client
 from diagrams.onprem.ci import GithubActions
+from diagrams.saas.communication import Twilio
 
 # Define the diagram
 with Diagram("Chatbot Infrastructure", filename="chatbot_infrastructure", show=False, direction="TB"):
@@ -17,7 +18,8 @@ with Diagram("Chatbot Infrastructure", filename="chatbot_infrastructure", show=F
         
         # Output Layer
         next_message = Custom("Next Message\n(Chatbot Response)", "images/next_message.png")
-
+        twilio_sms = Twilio("Twilio (SMS/Chatbot)")
+        
     # Standalone Embedding Workflow Vertical
     with Cluster("Standalone Embedding Workflow"):
         # Input Layer
@@ -42,6 +44,7 @@ with Diagram("Chatbot Infrastructure", filename="chatbot_infrastructure", show=F
     # FastAPI Relationships
     message_history >> fastapi_app  # Input to FastAPI
     fastapi_app >> next_message  # Generate chatbot response
+    next_message >> twilio_sms  # Send via Twilio or to chatbot
     github_actions >> fastapi_app  # CI/CD Pipeline for FastAPI
     fastapi_app << openai_api_chat  # Query OpenAI API for chat completion
     fastapi_app << pinecone_db_fastapi  # Query Pinecone for retrieval
